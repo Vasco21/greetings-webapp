@@ -8,6 +8,9 @@ const handlebarSetup = exphbs({
     layoutsDir : './views/layouts'
 });
 
+app.use(express.static('public'));
+
+
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 

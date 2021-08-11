@@ -1,46 +1,78 @@
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Greet exercise</title>
+    <link rel="stylesheet" href="css/greet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
-
-<body>
-    <div class="container">
-        <h1>A Greetings Web App</h1>
-
-        <form action="/greeting" method="post">
-            <input type="text" name="name" placeholder="">
-        </form>
-    </div>
-    <div class="row">
-        <label for="" class="">
-            <input type="radio" name="languageRadio" class="langRadio" value="english">
-            <span class="langText">English</span>
-        </label>
-        <label for="" class="">
-            <input type="radio" name="languageRadio" class="langRadio" value="sesotho">
-            <span class="langText">Sesotho</span>
-        </label>
-        <label for="" class="">
-            <input type="radio" name="languageRadio" class="langRadio" value="isixhosa">
-            <span class="langText">Isixhosa</span>
-        </label>
-
-        <div class="container1">
-
-            <form action="/greeting" method="post">
-                <button>Greet me</button>
-                <button class="resetButton">reset</button>
-            </form>
-        </div>
+<body >
+    <div class="body_center ">
 
         <div>
-            <h3><span class="greetText"></span></h3>
+            <h1>Greetings to all names!</h1>
+            <div class="err">
+                <span class="errorMessage"></span>
+            </div>
+
+            <div>
+                
+                <label class="la">
+             <input type="text" value="" name="" class="greetTextHolder" pattern="[a-zA-Z*]" placeholder="Type in your name here!">
+             <h3>Counter: <span class="numberCounter"></span></h3>
+                </label> 
+            </div>
+
+            <div class="container">
+                <label for="" class="">
+                    <input type="radio" name="languageRadio" class="langRadio" value="english">
+                   <span class="langText">English</span>
+                </label>
+                <label for="" class="">
+                    <input type="radio" name="languageRadio" class="langRadio" value="sesotho">
+                    <span class="langText">Sesotho</span>
+                </label>
+                <label for="" class="">
+                    <input type="radio" name="languageRadio" class="langRadio" value="isixhosa">
+                    <span class="langText">Isixhosa</span>
+                </label>
+            </div>
+
+            <div class="container1">
+                <button class="greetButton">Greet</button>
+                <button class="resetButton">reset</button>
+            </div>
+
+            <div>
+                <h3><span class="greetText"></span></h3>
+            </div>
+
+            <div>
+                <h3><span class="errors"></span></h3>
+            </div>
+            </div>
+
+            
+            {{!-- <div class="Btn">
+                <button class="listButton" >List Usernames</button>
+                <ul class="obj2"></ul>
+            </div> --}}
+            <div>
+                <div id='namesList'>
+
+                </div>
+            </div>
+
+            <div>
+            
+            </div>
         </div>
     </div>
-</body>
 
+
+    
+</body>
 </html>
