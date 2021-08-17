@@ -17,20 +17,18 @@
         <div>
             <h1>Greetings to all names!</h1>
             <div class="err">
-                <span class="errorMessage"></span>
+                <span class="errorMessage">{{errormessages}}</span>
             </div>
 
             <form action="/greeted" method="post">
             <div>
                 <label class="la">
-                    <input type="text" value="" name="" class="greetTextHolder" pattern="[a-zA-Z*]"
+                    <input type="text" value="" name="Names" class="greetTextHolder"
                         placeholder="Type in your name here!">
-                    <h3>Counter: <span class="numberCounter"></span></h3>
+                    <h3>Counter: <span class="numberCounter">{{counter}}</span></h3>
                 </label>
             </div>
-            </form>
 
-            <form action="/action" method="POST">
             <div class="container">
                 <label for="" class="">
                     <input type="radio" name="languageRadio" class="langRadio" value="english">
@@ -45,20 +43,20 @@
                     <span class="langText">IsiXhosa</span>
                 </label>
             </div>
-            </form>
-            <form action="/greeting" method="post">
+
+            
             <div class="container1">
-                <button class="greetButton">Greet</button>
-                <button class="resetButton">reset</button>
+                <button class="greetButton"  type = "submit">Greet</button>
+                <button class="resetButton"  type = "submit">reset</button>
             </div>
             </form>
 
             <div>
-                <h3><span class="greetText"></span></h3>
+                <h3><span class="greetText">{{greeting}}</span></h3>
             </div>
 
             <div>
-                <h3><span class="errors"></span></h3>
+                <h3><span class="errors">{{errors}}</span></h3>
             </div>
         </div>
  

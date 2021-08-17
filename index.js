@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
-const greetLangRadio = require("./greet")
+const greetLangRadio = require("./greet");
+const helperfunction = require('./helper');
 const exphbs  = require('express-handlebars');
 const handlebarSetup = exphbs({
     partialsDir: "./views/partials",
@@ -11,6 +12,7 @@ var bodyParser = require('body-parser');
 
 app.use(express.static('public'));
 
+let helper = helperfunction();
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -31,11 +33,17 @@ app.use(express.urlencoded({extended: false}));
 
 
 app.get('/', (req, res) => {
-    res.render('index')
-})
+    res.render('index', {
+        greeting : helper.getMsg(),
+        counter : helper.getCounter(),
+        errormessages : helper.allErrors()
+    });
+});
 
-app.get('/greeted', (req, res) => {
-    res.send("thanks for greeting this name.")
+app.post('/greeted', (req, res) => {
+    helper.greeting(req.body.Names, req.body.languageRadio);
+
+    res.redirect('/')
 });
 
 app.post('/greeting', (req, res) => {
