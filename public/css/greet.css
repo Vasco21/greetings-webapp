@@ -31,14 +31,13 @@ h3{
     color: blue;
 }
 .la input{
-    width: 30%;
     border-radius: 6px;
     padding: 20px 30px;
     margin: 15px 0;
     margin-bottom: 2%;
     background-color: cyan;
     color: black;
-}
+} 
 
  .container input[type="radio"] {
     margin-bottom: 50px;

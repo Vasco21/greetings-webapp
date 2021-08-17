@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
-<body >
+
+<body>
     <div class="body_center ">
 
         <div>
@@ -18,18 +20,21 @@
                 <span class="errorMessage"></span>
             </div>
 
+            <form action="/greeted" method="post">
             <div>
-                
                 <label class="la">
-             <input type="text" value="" name="" class="greetTextHolder" pattern="[a-zA-Z*]" placeholder="Type in your name here!">
-             <h3>Counter: <span class="numberCounter"></span></h3>
-                </label> 
+                    <input type="text" value="" name="" class="greetTextHolder" pattern="[a-zA-Z*]"
+                        placeholder="Type in your name here!">
+                    <h3>Counter: <span class="numberCounter"></span></h3>
+                </label>
             </div>
+            </form>
 
+            <form action="/action" method="POST">
             <div class="container">
                 <label for="" class="">
                     <input type="radio" name="languageRadio" class="langRadio" value="english">
-                   <span class="langText">English</span>
+                    <span class="langText">English</span>
                 </label>
                 <label for="" class="">
                     <input type="radio" name="languageRadio" class="langRadio" value="sesotho">
@@ -40,11 +45,13 @@
                     <span class="langText">IsiXhosa</span>
                 </label>
             </div>
-
+            </form>
+            <form action="/greeting" method="post">
             <div class="container1">
                 <button class="greetButton">Greet</button>
                 <button class="resetButton">reset</button>
             </div>
+            </form>
 
             <div>
                 <h3><span class="greetText"></span></h3>
@@ -53,26 +60,23 @@
             <div>
                 <h3><span class="errors"></span></h3>
             </div>
-            </div>
+        </div>
+ 
 
-            
-            {{!-- <div class="Btn">
-                <button class="listButton" >List Usernames</button>
-                <ul class="obj2"></ul>
-            </div> --}}
-            <div>
-                <div id='namesList'>
+        
+            <div id='namesList'>
 
-                </div>
-            </div>
-
-            <div>
-            
             </div>
         </div>
+
+        <div>
+
+        </div>
+    </div>
     </div>
 
 
-    
+
 </body>
+
 </html>

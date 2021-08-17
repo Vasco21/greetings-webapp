@@ -7,6 +7,7 @@ const handlebarSetup = exphbs({
     viewPath:  './views',
     layoutsDir : './views/layouts'
 });
+var bodyParser = require('body-parser');
 
 app.use(express.static('public'));
 
@@ -21,11 +22,11 @@ app.engine('handlebars', exphbs({defaultLayout: 'main', layoutsDir:__dirname + '
 app.set('view engine', 'handlebars');
 
 // parse application/x-www-form-urlencoded
-// app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
-// app.use(bodyParser.json())
+app.use(bodyParser.json())
 
-// app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: false}));
 
 
 
