@@ -67,6 +67,6 @@ module.exports = function greetLangRadio() {
             capFirstLetter,
             getCounter,  
             getlocal,
-            setlocal 
+            setlocal
         }
     }
