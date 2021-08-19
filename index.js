@@ -56,6 +56,11 @@ appExpress.post("/greeted", (reqHtml , resHtml) => {
     resHtml.redirect('/');
 })
 
+appExpress.get("/reset", (reqHtml , resHtml) => {
+    helper.resetBtn();
+    resHtml.redirect('/');
+})
+
 
 
 appExpress.listen(3012);
