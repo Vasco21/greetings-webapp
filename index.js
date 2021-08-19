@@ -1,7 +1,9 @@
 const express = require('express');
-const app = express();
+const appExpress = express();
+const session = require('express-session')
+const flash = require('express-flash');
 const greetLangRadio = require("./greet");
-const helperfunction = require('./helper');
+const helperfunction = require('./helper/helper');
 const exphbs  = require('express-handlebars');
 const handlebarSetup = exphbs({
     partialsDir: "./views/partials",
@@ -10,49 +12,50 @@ const handlebarSetup = exphbs({
 });
 var bodyParser = require('body-parser');
 
-app.use(express.static('public'));
+appExpress.use(express.static('public'));
 
 let helper = helperfunction();
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
+appExpress.engine('handlebars', exphbs({defaultLayout: 'main'}));
+appExpress.set('view engine', 'handlebars');
 
-app.engine('handlebars', handlebarSetup);
-app.set('view engine', 'handlebars');
+appExpress.engine('handlebars', handlebarSetup);
+appExpress.set('view engine', 'handlebars');
 
-app.engine('handlebars', exphbs({defaultLayout: 'main', layoutsDir:__dirname + '/views/layouts'}));
-app.set('view engine', 'handlebars');
+appExpress.engine('handlebars', exphbs({defaultLayout: 'main', layoutsDir:__dirname + '/views/layouts'}));
+appExpress.set('view engine', 'handlebars');
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
-// parse application/json
-app.use(bodyParser.json())
+// parse appExpresslication/x-www-form-urlencoded
+appExpress.use(bodyParser.urlencoded({ extended: false }))
+// parse appExpresslication/json
+appExpress.use(bodyParser.json())
 
-app.use(express.urlencoded({extended: false}));
+appExpress.use(express.urlencoded({extended: false}));
 
+appExpress.use(session({
+    secret : "Error Message String",
+    resave: false,
+    saveUninitialized: true
+}));
 
+appExpress.use(flash());
 
-app.get('/', (req, res) => {
-    res.render('index', {
-        greeting : helper.getMsg(),
-        counter : helper.getCounter(),
-        errormessages : helper.allErrors()
-    });
-});
+appExpress.get('/', (reqHtml , resHtml) => {
+    reqHtml.flash('error', helper.allValues().Array2);
+    reqHtml.flash('success', helper.allValues().succeful);
+    resHtml.render('index', {
+        title : 'home',
+        counter : helper.allValues().counter,
+        greeting : helper.allValues().Array1,
+    })
 
-app.post('/greeted', (req, res) => {
-    helper.greeting(req.body.Names, req.body.languageRadio);
-
-    res.redirect('/')
-});
-
-app.post('/greeting', (req, res) => {
-
-    res.send("thanks for greeting this name.")
-});
-
-app.get("/results", (req, res) => {
-    res.send("please enter a correct name!")
 })
 
-app.listen(3012);
+appExpress.post("/greeted", (reqHtml , resHtml) => {
+    helper.langCompler(reqHtml.body.Names , reqHtml.body.languageRadio);
+    resHtml.redirect('/');
+})
+
+
+
+appExpress.listen(3012);

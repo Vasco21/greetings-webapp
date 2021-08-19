@@ -1,0 +1,17 @@
+<header class="listOfaNames">
+    List of Names
+</header>
+<div class="container">
+    <div class="class NameList">
+        <table>
+            {{#each names}}
+            <tr>
+                <td class="NameGreeted" href="/counter/{{this.allNames}}"><h2>{{this.allNames}}</h2></td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+    <div class="class home">
+        <a class="back" href="/">Back</a>
+    </div>
+</div>

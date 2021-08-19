@@ -1,13 +1,13 @@
 body{
     margin: 0;
     padding: 0;
-    /* background: gray; */
+    background: gray;
 }
 
 .body_center{
     
     text-align: center;
-    margin: 20%;
+   
 }
 .err{
     color: red;
