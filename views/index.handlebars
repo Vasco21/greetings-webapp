@@ -1,26 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="body_center ">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Greet exercise</title>
-    <link rel="stylesheet" href="css/greet.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <div>
+        <h1>Greetings to all names!</h1>
+        <div class="err">
+            <span class="errorMessage">{{error}}</span>
+        </div>
 
-</head>
-
-<body>
-    <div class="body_center ">
-
-        <div>
-            <h1>Greetings to all names!</h1>
-            <div class="err">
-                <span class="errorMessage">{{errormessages}}</span>
-            </div>
-
-            <form action="/greeted" method="post">
+        <form action="/greeted" method="post">
             <div>
                 <label class="la">
                     <input type="text" value="" name="Names" class="greetTextHolder"
@@ -44,41 +30,36 @@
                 </label>
             </div>
 
-            
+
             <div class="container1">
-                <button class="greetButton"  type = "submit">Greet</button>
+                <button class="greetButton" type="submit">Greet</button>
             </div>
-            </form>
-            <div>
-
-            </div>
-                <a href="reset"><button class="resetButton"  type = "submit">reset</button></a>
-
-            <div>
-                <h3><span class="greetText">{{greeting}}</span></h3>
-            </div>
-
-            <div>
-                <h3><span class="errors">{{errors}}</span></h3>
-            </div>
-        </div>
-        <div class="Btn">
-                <a href="list"><button class="listButton" >List Usernames</button></a>
-                <ul class="obj2"></ul>
-            </div>
-            <div id='namesList'>
-
-            </div>
-        </div>
-
+        </form>
         <div>
 
         </div>
+        <a href="reset"><button class="resetButton" type="submit">reset</button></a>
+
+        <div>
+            <h3><span class="greetText">{{greeting}}</span></h3>
+        </div>
+
+        <div>
+            <h3><span class="errors">{{success}}</span></h3>
+        </div>
     </div>
+    <div class="Btn">
+
+        <a href="list"><button class="listButton">List Usernames</button></a>
+        <ul class="obj2"></ul>
     </div>
+    <div id='namesList'>
 
+    </div>
+</div>
 
+<div>
 
-</body>
-
-</html>
+</div>
+</div>
+</div>

@@ -1,12 +1,12 @@
 <header class="listOfaNames">
-    List of Names
+    Names has been Greeted
 </header>
 <div class="container">
     <div class="class NameList">
         <table>
             {{#each names}}
             <tr>
-                <td class="NameGreeted" href="/counter/{{this.allNames}}"><h2>{{this.allNames}}</h2></td>
+                <a class="NameGreeted" href="/counter/{{@key}}"><h5>{{@key}}</h5></a>
             </tr>
             {{/each}}
         </table>

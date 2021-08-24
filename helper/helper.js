@@ -1,4 +1,5 @@
 module.exports = function greetNames() {
+    
     //variables
     let counter = 0;
     let nameList = {};
@@ -19,7 +20,8 @@ module.exports = function greetNames() {
    let radioPrs = "Error Please select the language";
    let succeful;
 
-
+   
+   //
    var langCompler = function (nameText, radioBtn){
        succeful = "";
         name = nameText.trim();
@@ -43,52 +45,31 @@ module.exports = function greetNames() {
                if(nameList[name] === undefined){
                    if(radioBtn === "english"){
                        counter++;
-                       nameList[name] = 1;
+                       
                        Array1 = englishLang + name;
                        Array2 = "";
-
-                       let elem = new constr(name, nameList[name]);
-                       Objname.push(elem);
-                       return Array1;
                    }
                    else if(radioBtn === "sesotho"){
                        counter++;
-                       nameList[name] = 1;
                        Array1 = sesothoLang + name;
                        Array2 = "";
-
-                       let elem = new constr(name, nameList[name]);
-                       Objname.push(elem);
-                       return Array1;
                    }
                    else if (radioBtn === "isixhosa"){
                     counter++;
-                    nameList[name] = 1;
                     Array1 = isixhosaLang + name;
                     Array2 = "";
-
-                    let elem = new constr(name, nameList[name]);
-                    Objname.push(elem);
-                    return Array1;
-
                    }
                    Array2 = "";
-
+                   nameList[name] = 1;
+                   return Array1;
                }
                else if (nameList.hasOwnProperty(name)){
                    Array2 = Newname;
                    Array1 = "";
                    nameList[name]++;
-                   for(let i = 0; i < objname.length; i++){
-                       let str = objname[i];
-                       if (str.greetedNames === name){
-                           str.counter = nameList[name];
-                       }
-                   }
                    return nameList;
                }
            }
-
        }
    }
 
@@ -106,21 +87,20 @@ module.exports = function greetNames() {
     Array2 = "";
     succeful = "";
    }
-   var ourClient = function(value){
-       for (var i = 0; i < Objname.length; i){
-           let str = Objname[i];
-           if(str.greetNames === value){
-               return{
-                   Names : str.greetNames,
-                   counters : str.counter,
-               }
-           }
+   var ourClient = (value) =>{
+      
+       return {
+           Names: value,
+           counters: nameList[value]
        }
    }
    var constr = function(greetNames, counter){
        this.greetNames = greetNames;
-       this.counter = counter;
+       this.counter = (ourClient(greetNames)) ?
+       ourClient(greetNames).counters + 1 : counter
+       
    }
+
    var allValues = function(){
        return{
            counter : counter,
@@ -146,3 +126,4 @@ module.exports = function greetNames() {
     resetBtn
    }
 }
+

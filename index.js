@@ -47,20 +47,36 @@ appExpress.get('/', (reqHtml , resHtml) => {
         title : 'home',
         counter : helper.allValues().counter,
         greeting : helper.allValues().Array1,
-    })
-
-})
+    });
+});
 
 appExpress.post("/greeted", (reqHtml , resHtml) => {
     helper.langCompler(reqHtml.body.Names , reqHtml.body.languageRadio);
     resHtml.redirect('/');
-})
+});
 
 appExpress.get("/reset", (reqHtml , resHtml) => {
     helper.resetBtn();
     resHtml.redirect('/');
-})
+});
 
+appExpress.get("/list", (reqHtml , resHtml) => {
+    resHtml.render('greetedNames', {
+        names : helper.allValues().nameList
+    });
+});
 
+appExpress.get('/counter', (reqHtml, resHtml)=>{
+    resHtml.render('counter');
+});
+
+appExpress.get('/counter/:Usernames', (reqHtml, resHtml)=>{
+    const Usernames = reqHtml.params.Usernames
+    const results = helper.ourClient(Usernames);
+    resHtml.render('counter', {
+        ...results
+        
+    });
+});
 
 appExpress.listen(3012);
