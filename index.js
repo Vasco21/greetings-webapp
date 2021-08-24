@@ -79,4 +79,6 @@ appExpress.get('/counter/:Usernames', (reqHtml, resHtml)=>{
     });
 });
 
-appExpress.listen(3012);
+
+const PORT = process.env.PORT || 3012
+appExpress.listen(PORT);
