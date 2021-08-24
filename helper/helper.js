@@ -35,7 +35,7 @@ module.exports = function greetNames() {
            return Array2
        }
        else{
-           name = name.charAt(0).toUpperCase() + name.slice(1);
+           name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
            if (!/^[a-zA-Z]+$/.test(name)){
             Array2 = getName;
             Array1 = "";
