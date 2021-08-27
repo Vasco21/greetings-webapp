@@ -2,9 +2,11 @@
 
     <div>
         <h1>Greetings to all names!</h1>
+        {{#if messages.info}}
         <div class="err">
-            <span class="errorMessage">{{error}}</span>
+            <span class="errorMessage" id="errorMessage">{{messages.info}}</span>
         </div>
+        {{/if}}
 
         <form action="/greeted" method="post">
             <div>
@@ -43,10 +45,11 @@
         <div>
             <h3><span class="greetText">{{greeting}}</span></h3>
         </div>
-
+        {{#if messages.success}}
         <div>
-            <h3><span class="errors">{{success}}</span></h3>
+            <h3><span class="errors">{{messages.success}}</span></h3>
         </div>
+        {{/if}}
     </div>
     <div class="Btn">
 

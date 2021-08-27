@@ -11,13 +11,14 @@ module.exports = function greetNames() {
 
    let Array1 = "";
    let Array2 = "";
+   
 
    let name = "";
    let language = "";
    // error messages variables
-   let getName = "error! Please enter your name correctly";
+   let getName = "error! Please enter your name correctly,";
    let Newname =  "Error! Please enter a new name";
-   let radioPrs = "Error Please select the language";
+   let radioPrs = "Please select the language";
    let succeful;
 
    
@@ -27,34 +28,32 @@ module.exports = function greetNames() {
         name = nameText.trim();
 
        if(name === "" && radioBtn === undefined){
-           Array2 = getName;
+           Array2 = getName + " " + radioPrs;
            return Array2
-       }
-       else if (radioBtn === undefined && name !== ""){
+       }  else if (radioBtn === undefined && name !== ""){
            Array2 = radioPrs;
            return Array2
-       }
-       else{
+       } else if(name === ""){
+        Array2 = getName;
+        return Array2;
+       }  else {
            name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
            if (!/^[a-zA-Z]+$/.test(name)){
             Array2 = getName;
             Array1 = "";
             name = "";
-           }
-           else if (/^[a-zA-Z]+$/.test(name)){
+           } else if (/^[a-zA-Z]+$/.test(name)){
                if(nameList[name] === undefined){
                    if(radioBtn === "english"){
                        counter++;
                        
                        Array1 = englishLang + name;
                        Array2 = "";
-                   }
-                   else if(radioBtn === "sesotho"){
+                   } else if(radioBtn === "sesotho"){
                        counter++;
                        Array1 = sesothoLang + name;
                        Array2 = "";
-                   }
-                   else if (radioBtn === "isixhosa"){
+                   } else if (radioBtn === "isixhosa"){
                     counter++;
                     Array1 = isixhosaLang + name;
                     Array2 = "";
@@ -62,12 +61,11 @@ module.exports = function greetNames() {
                    Array2 = "";
                    nameList[name] = 1;
                    return Array1;
-               }
-               else if (nameList.hasOwnProperty(name)){
+               }   else if (nameList.hasOwnProperty(name)){
                    Array2 = Newname;
                    Array1 = "";
                    nameList[name]++;
-                   return nameList;
+                   return null;
                }
            }
        }
@@ -80,7 +78,7 @@ module.exports = function greetNames() {
      Array1 = "";
      Array2 = "";
      succeful = "succefully reset"
-
+    return succeful;
    }
    var reseting = function(){
     Array1 = "";
@@ -118,12 +116,16 @@ module.exports = function greetNames() {
            succeful: succeful
        }
    }
+
+   var getCounter = function() {
+    return counter;
+   }
    return{
     langCompler,
     allValues,
     ourClient,
     reseting,
-    resetBtn
+    resetBtn,
+    getCounter
    }
 }
-

@@ -30,6 +30,7 @@ appExpress.use(bodyParser.urlencoded({ extended: false }))
 // parse appExpresslication/json
 appExpress.use(bodyParser.json())
 
+
 appExpress.use(express.urlencoded({extended: false}));
 
 appExpress.use(session({
@@ -41,8 +42,6 @@ appExpress.use(session({
 appExpress.use(flash());
 
 appExpress.get('/', (reqHtml , resHtml) => {
-    reqHtml.flash('error', helper.allValues().Array2);
-    reqHtml.flash('success', helper.allValues().succeful);
     resHtml.render('index', {
         title : 'home',
         counter : helper.allValues().counter,
@@ -51,13 +50,30 @@ appExpress.get('/', (reqHtml , resHtml) => {
 });
 
 appExpress.post("/greeted", (reqHtml , resHtml) => {
-    helper.langCompler(reqHtml.body.Names , reqHtml.body.languageRadio);
-    resHtml.redirect('/');
+    if(reqHtml.body.Names==="" && reqHtml.body.languageRadio===undefined){
+        reqHtml.flash('info', "Please enter a name and Select a language!");
+    } else if(reqHtml.body.languageRadio===undefined){
+        reqHtml.flash('info', "Plaese select a language!");
+    } else if(reqHtml.body.Names===""){
+        reqHtml.flash('info', "Plaese enter a name!");
+    }else if(!/^[a-zA-Z]+$/.test(reqHtml.body.Names)){
+        reqHtml.flash('info', "Plaese enter a valid name!");
+    } else {
+       helper.langCompler(reqHtml.body.Names , reqHtml.body.languageRadio);
+    }
+    resHtml.render('index', {
+        counter :helper.getCounter(),
+        greeting : helper.allValues().Array1,
+
+    });
 });
 
 appExpress.get("/reset", (reqHtml , resHtml) => {
-    helper.resetBtn();
-    resHtml.redirect('/');
+    reqHtml.flash('success', helper.allValues().succeful);
+    resHtml.render('index', {
+        error :helper.resetBtn(),
+        counter :helper.getCounter()
+    });
 });
 
 appExpress.get("/list", (reqHtml , resHtml) => {
