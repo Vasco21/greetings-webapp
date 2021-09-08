@@ -8,7 +8,7 @@ var connection = {
 }
 var dbcon = process.env.DATABASE_URL || connection
 const pool = new Pool({
-        dbcon,
+        connectionString: dbcon,
         ssl:{
           rejectUnauthorized: false
         }
