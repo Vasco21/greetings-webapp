@@ -58,7 +58,7 @@ h3{
     margin: 4px 2px;
     cursor: pointer;
   }
-  .container1 .greetButton:hover, .resetButton:hover
+  .container1 .greetButton, .resetButton
   {
       background: black;
   }
@@ -88,7 +88,21 @@ h3{
 }
 .listOfaNames{
     text-align: center;
+    
 }
 .container{
     text-align: center;
+   
+}
+.Counter{
+    text-align: center;
+}
+.link{
+    text-align: center;
+}
+.listPage{
+    background-color: grey;
+}
+.NameGreeted{
+    color: skyblue
 }

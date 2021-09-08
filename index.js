@@ -2,6 +2,9 @@ const express = require('express');
 const appExpress = express();
 const session = require('express-session')
 const flash = require('express-flash');
+const pg = require('pg');
+// const cros = require('cros');
+const pool = require('./server/database');
 const greetLangRadio = require("./greet");
 const helperfunction = require('./helper/helper');
 const exphbs  = require('express-handlebars');
@@ -10,11 +13,11 @@ const handlebarSetup = exphbs({
     viewPath:  './views',
     layoutsDir : './views/layouts'
 });
+
 var bodyParser = require('body-parser');
 
-appExpress.use(express.static('public'));
 
-let helper = helperfunction();
+let helper = helperfunction(pool);
 
 appExpress.engine('handlebars', exphbs({defaultLayout: 'main'}));
 appExpress.set('view engine', 'handlebars');
@@ -25,6 +28,10 @@ appExpress.set('view engine', 'handlebars');
 appExpress.engine('handlebars', exphbs({defaultLayout: 'main', layoutsDir:__dirname + '/views/layouts'}));
 appExpress.set('view engine', 'handlebars');
 
+// medleware
+
+appExpress.use(express.static('public'));
+// appExpress.use(cros());
 // parse appExpresslication/x-www-form-urlencoded
 appExpress.use(bodyParser.urlencoded({ extended: false }))
 // parse appExpresslication/json
@@ -49,23 +56,28 @@ appExpress.get('/', (reqHtml , resHtml) => {
     });
 });
 
-appExpress.post("/greeted", (reqHtml , resHtml) => {
-    if(reqHtml.body.Names==="" && reqHtml.body.languageRadio===undefined){
-        reqHtml.flash('info', "Please enter a name and Select a language!");
-    } else if(reqHtml.body.languageRadio===undefined){
-        reqHtml.flash('info', "Plaese select a language!");
-    } else if(reqHtml.body.Names===""){
-        reqHtml.flash('info', "Plaese enter a name!");
-    }else if(!/^[a-zA-Z]+$/.test(reqHtml.body.Names)){
-        reqHtml.flash('info', "Plaese enter a valid name!");
-    } else {
-       helper.langCompler(reqHtml.body.Names , reqHtml.body.languageRadio);
+appExpress.post("/greeted", async (reqHtml , resHtml, error)=> {
+    try{
+        if(reqHtml.body.Names==="" && reqHtml.body.languageRadio===undefined){
+            reqHtml.flash('info', "Please enter a name and Select a language!");
+        } else if(reqHtml.body.languageRadio===undefined){
+            reqHtml.flash('info', "Plaese select a language!");
+        } else if(reqHtml.body.Names===""){
+            reqHtml.flash('info', "Plaese enter a name!");
+        }else if(!/^[a-zA-Z]+$/.test(reqHtml.body.Names)){
+            reqHtml.flash('info', "Plaese enter a valid name!");
+        } else {
+           await helper.langCompler(reqHtml.body.Names , reqHtml.body.languageRadio);
+        }
+        resHtml.render('index', {
+            counter :helper.getCounter(),
+            greeting : helper.allValues().Array1,
+    
+        });
+    } catch(message){
+        error(message)
     }
-    resHtml.render('index', {
-        counter :helper.getCounter(),
-        greeting : helper.allValues().Array1,
-
-    });
+    
 });
 
 appExpress.get("/reset", (reqHtml , resHtml) => {

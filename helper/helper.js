@@ -1,4 +1,4 @@
-module.exports = function greetNames() {
+module.exports = (database) => {
     
     //variables
     let counter = 0;
@@ -23,7 +23,7 @@ module.exports = function greetNames() {
 
    
    //
-   var langCompler = function (nameText, radioBtn){
+   var langCompler = async function (nameText, radioBtn){
        succeful = "";
         name = nameText.trim();
 
@@ -43,17 +43,21 @@ module.exports = function greetNames() {
             Array1 = "";
             name = "";
            } else if (/^[a-zA-Z]+$/.test(name)){
-               if(nameList[name] === undefined){
+               var nameFromDatabase= await  database.query("select * from people where names=$1",[name])
+               if(nameFromDatabase.rows.length == 0){
                    if(radioBtn === "english"){
+                       await database.query("insert into people(names, conter, english, sesotho, isixhosa) values($1, $2, $3, $4, $5)", [name, 1, 1, 0, 0]);
                        counter++;
                        
                        Array1 = englishLang + name;
                        Array2 = "";
                    } else if(radioBtn === "sesotho"){
+                       await database.query("insert into people(names, conter, english, sesotho, isixhosa) values($1, $2, $3, $4, $5)", [name, 1, 0, 1, 0]);
                        counter++;
                        Array1 = sesothoLang + name;
                        Array2 = "";
                    } else if (radioBtn === "isixhosa"){
+                    await database.query("insert into people(names, conter, english, sesotho, isixhosa) values($1, $2, $3, $4, $5)", [name, 1, 0, 0, 1]);
                     counter++;
                     Array1 = isixhosaLang + name;
                     Array2 = "";
@@ -62,6 +66,9 @@ module.exports = function greetNames() {
                    nameList[name] = 1;
                    return Array1;
                }   else if (nameList.hasOwnProperty(name)){
+                    await database.query("UPDATE people SET sesotho=sesotho+1, conter=conter+1 WHERE names = $1", [name]);
+                    await database.query("UPDATE people SET isixhosa=isixhosa+1, conter=conter+1 WHERE names = $1", [name]);
+                    await database.query("UPDATE people SET english=english+1, conter=conter+1 WHERE names = $1", [name]);
                    Array2 = Newname;
                    Array1 = "";
                    nameList[name]++;
@@ -71,13 +78,9 @@ module.exports = function greetNames() {
        }
    }
 
-   var resetBtn = function(){
+   var resetBtn = async function(){
      counter = 0;
-     nameList = {};
-     Objname = [];
-     Array1 = "";
-     Array2 = "";
-     succeful = "succefully reset"
+     const succeful = await database.query("DELETE FROM people");
     return succeful;
    }
    var reseting = function(){
@@ -92,13 +95,13 @@ module.exports = function greetNames() {
            counters: nameList[value]
        }
    }
+
    var constr = function(greetNames, counter){
        this.greetNames = greetNames;
        this.counter = (ourClient(greetNames)) ?
        ourClient(greetNames).counters + 1 : counter
        
    }
-
    var allValues = function(){
        return{
            counter : counter,
@@ -126,6 +129,7 @@ module.exports = function greetNames() {
     ourClient,
     reseting,
     resetBtn,
-    getCounter
+    getCounter,
+    // deletePeople
    }
 }
