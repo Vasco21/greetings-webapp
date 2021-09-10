@@ -2,10 +2,9 @@ const express = require('express');
 const appExpress = express();
 const session = require('express-session')
 const flash = require('express-flash');
-const pg = require('pg');
-// const cros = require('cros');
+// const pg = require('pg');
 const pool = require('./server/database');
-const greetLangRadio = require("./greet");
+// const greetLangRadio = require("./greet");
 const helperfunction = require('./helper/helper');
 const exphbs  = require('express-handlebars');
 const handlebarSetup = exphbs({
@@ -48,7 +47,8 @@ appExpress.use(session({
 
 appExpress.use(flash());
 
-appExpress.get('/', (reqHtml , resHtml) => {
+appExpress.get('/', async (reqHtml , resHtml) => {
+    console.log(await helper.CounterDB());
     resHtml.render('index', {
         title : 'home',
         counter : helper.allValues().counter,
@@ -57,6 +57,7 @@ appExpress.get('/', (reqHtml , resHtml) => {
 });
 
 appExpress.post("/greeted", async (reqHtml , resHtml, error)=> {
+    console.log(await helper.CounterDB());
     try{
         if(reqHtml.body.Names==="" && reqHtml.body.languageRadio===undefined){
             reqHtml.flash('info', "Please enter a name and Select a language!");
@@ -70,7 +71,7 @@ appExpress.post("/greeted", async (reqHtml , resHtml, error)=> {
            await helper.langCompler(reqHtml.body.Names , reqHtml.body.languageRadio);
         }
         resHtml.render('index', {
-            counter :helper.getCounter(),
+            counter : await helper.CounterDB(),
             greeting : helper.allValues().Array1,
     
         });
@@ -80,11 +81,11 @@ appExpress.post("/greeted", async (reqHtml , resHtml, error)=> {
     
 });
 
-appExpress.get("/reset", (reqHtml , resHtml) => {
+appExpress.get("/reset", async (reqHtml , resHtml) => {
     reqHtml.flash('success', helper.allValues().succeful);
     resHtml.render('index', {
         error :helper.resetBtn(),
-        counter :helper.getCounter()
+        counter :await helper.CounterDB()
     });
 });
 

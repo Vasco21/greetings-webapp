@@ -8,3 +8,4 @@ CREATE TABLE people (
     sesotho INT not null,
     isixhosa INT not null
 );
+

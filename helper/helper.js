@@ -20,6 +20,7 @@ module.exports = (database) => {
    let Newname =  "Error! Please enter a new name";
    let radioPrs = "Please select the language";
    let succeful;
+   
 
    
    //
@@ -77,6 +78,10 @@ module.exports = (database) => {
            }
        }
    }
+ 
+   function setNamePool(names) {
+    nameFromDatabase = names;
+  }
 
    var resetBtn = async function(){
      counter = 0;
@@ -120,6 +125,11 @@ module.exports = (database) => {
        }
    }
 
+   async function CounterDB(){
+        var nameFromDatabase= await  database.query("select * from people")
+        return nameFromDatabase.rows.length
+   }
+
    var getCounter = function() {
     return counter;
    }
@@ -130,6 +140,7 @@ module.exports = (database) => {
     reseting,
     resetBtn,
     getCounter,
-    // deletePeople
+    setNamePool,
+    CounterDB
    }
 }
