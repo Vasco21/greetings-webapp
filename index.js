@@ -110,4 +110,6 @@ appExpress.get('/counter/:Usernames', (reqHtml, resHtml)=>{
 
 
 const PORT = process.env.PORT || 3012
-appExpress.listen(PORT);
+appExpress.listen(PORT) , () => {
+    console.log('App running on this IP and port:', PORT);
+}
