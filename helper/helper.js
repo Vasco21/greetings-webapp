@@ -78,6 +78,29 @@ module.exports = (database) => {
            }
        }
    }
+   async function errorMsg(reqHtml, resHtml, error){
+
+    try{
+        if(reqHtml.body.Names==="" && reqHtml.body.languageRadio===undefined){
+            reqHtml.flash('info', "Please enter a name and Select a language!");
+        } else if(reqHtml.body.languageRadio===undefined){
+            reqHtml.flash('info', "Plaese select a language!");
+        } else if(reqHtml.body.Names===""){
+            reqHtml.flash('info', "Plaese enter a name!");
+        }else if(!/^[a-zA-Z]+$/.test(reqHtml.body.Names)){
+            reqHtml.flash('info', "Plaese enter a valid name!");
+        } else {
+           await langCompler(reqHtml.body.Names , reqHtml.body.languageRadio);
+        }
+        resHtml.render('index', {
+            counter : await CounterDB(),
+            greeting : allValues().Array1,
+    
+        });
+    } catch(message){
+        error(message)
+    }   
+}
  
    function setNamePool(names) {
     nameFromDatabase = names;
@@ -141,6 +164,7 @@ module.exports = (database) => {
     resetBtn,
     getCounter,
     setNamePool,
-    CounterDB
+    CounterDB,
+    errorMsg
    }
 }

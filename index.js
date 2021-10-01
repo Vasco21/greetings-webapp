@@ -6,6 +6,7 @@ const flash = require('express-flash');
 const pool = require('./server/database');
 // const greetLangRadio = require("./greet");
 const helperfunction = require('./helper/helper');
+// const helperRoute = require('./route/route')
 const exphbs  = require('express-handlebars');
 const handlebarSetup = exphbs({
     partialsDir: "./views/partials",
@@ -17,6 +18,7 @@ var bodyParser = require('body-parser');
 
 
 let helper = helperfunction(pool);
+// let route = helperRoute();
 
 appExpress.engine('handlebars', exphbs({defaultLayout: 'main'}));
 appExpress.set('view engine', 'handlebars');
@@ -48,7 +50,7 @@ appExpress.use(session({
 appExpress.use(flash());
 
 appExpress.get('/', async (reqHtml , resHtml) => {
-    console.log(await helper.CounterDB());
+    // console.log(await helper.CounterDB());
     resHtml.render('index', {
         title : 'home',
         counter : helper.allValues().counter,
@@ -56,30 +58,7 @@ appExpress.get('/', async (reqHtml , resHtml) => {
     });
 });
 
-appExpress.post("/greeted", async (reqHtml , resHtml, error)=> {
-    console.log(await helper.CounterDB());
-    try{
-        if(reqHtml.body.Names==="" && reqHtml.body.languageRadio===undefined){
-            reqHtml.flash('info', "Please enter a name and Select a language!");
-        } else if(reqHtml.body.languageRadio===undefined){
-            reqHtml.flash('info', "Plaese select a language!");
-        } else if(reqHtml.body.Names===""){
-            reqHtml.flash('info', "Plaese enter a name!");
-        }else if(!/^[a-zA-Z]+$/.test(reqHtml.body.Names)){
-            reqHtml.flash('info', "Plaese enter a valid name!");
-        } else {
-           await helper.langCompler(reqHtml.body.Names , reqHtml.body.languageRadio);
-        }
-        resHtml.render('index', {
-            counter : await helper.CounterDB(),
-            greeting : helper.allValues().Array1,
-    
-        });
-    } catch(message){
-        error(message)
-    }
-    
-});
+appExpress.post("/greeted", helper.errorMsg);
 
 appExpress.get("/reset", async (reqHtml , resHtml) => {
     reqHtml.flash('success', helper.allValues().succeful);
